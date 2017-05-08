@@ -82,7 +82,7 @@ $(document).ready(()=>{
 				$(obj).appendTo(".chatroom-overflow > div");
 				$(obj).removeClass("template");
 				$(".chatroom-overflow").stop();
-				$(".chatroom-overflow").animate({ scrollTop: $(".chatroom-overflow").height() }, 1000);
+				$(".chatroom-overflow").animate({ scrollTop: $(".chat-template").length * 62}, 1000); //hack scroll pos
 			})
 		}
 	})
@@ -177,6 +177,12 @@ $(document).ready(()=>{
 		});
 	})
 
+	$(".btn-logout").click(() => {
+		firebase.auth().signOut();
+		location.reload();
+	})
+	
+
 	//Chat
 
 	const chatinput = $("#chat-text")
@@ -238,5 +244,5 @@ $(document).ready(()=>{
 
 	//Web Start
 	$(".login").fadeIn(1000, 'swing');
-	firebase.auth().signOut();
+	//firebase.auth().signOut();
 })

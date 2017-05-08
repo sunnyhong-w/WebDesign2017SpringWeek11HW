@@ -241,6 +241,15 @@
 	cursor: pointer;
 }
 
+.whitemark img{
+	transform: rotate(-90deg);
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 50px;
+	top : 0;
+}
+
 .container-chatroom{
 	display: flex;
 	justify-content:center;
@@ -300,6 +309,8 @@
 	width: 100%;
 }
 
-.chat-text{
+#chat-text{
+	font-family: "Noto Sans TC","Helvetica","Arial",sans-serif;
+	font-weight: 300;
 	width: 100%;
 }
