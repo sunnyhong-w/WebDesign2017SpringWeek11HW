@@ -29,17 +29,20 @@ $(document).ready(()=>{
 			//Set User Data
 
 			var user = user.providerData[0];
-			$("#info-name").text(user.displayName || "Anonymous");
+			$("#info-name")[0].parentElement.MaterialTextfield.change(user.displayName || "Anonymous");
+			$("#info-name-out").text(user.displayName || "Anonymous");
 			$("#info-img").attr("src", user.photoURL || "image/unknow.svg");
 
 			dbRef.child("user").child(firebase.auth().currentUser.uid).once('value').then((snapshot) => {
-				var data;
-				for(key in snapshot.val()) //只會發生一次
-					data = snapshot.val()[key];
+				var data = snapshot.val()
 
-				$("#info-occupation").text(data.occupation || "<No occupation>");
-				$("#info-age").text(data.age || 0);
-				$("#info-descriptions").text(data.descriptions || "<No descriptions>");
+				$("#info-occupation")[0].parentElement.MaterialTextfield.change(data.occupation || "");
+				$("#info-age")[0].parentElement.MaterialTextfield.change(data.age || 0);
+				$("#info-descriptions")[0].parentElement.MaterialTextfield.change(data.descriptions || "");
+
+				$("#info-occupation-out").text(data.occupation || "<No occupation>");
+				$("#info-age-out").text(data.age || 0);
+				$("#info-descriptions-out").text(data.descriptions || "<No descriptions>");
 			});
 
 			//Chat History
@@ -88,7 +91,7 @@ $(document).ready(()=>{
 				})
 
 				createPromise.then((user) => {
-					dbRef.child("user").child(user.uid).push({
+					dbRef.child("user").child(user.uid).set({
 						"occupation": "",
 						"age": 0,
 						"descriptions" : ""
@@ -109,6 +112,41 @@ $(document).ready(()=>{
 		loginPromise.then((e) => {
 			$(".login-error").hide();
 		})
+	})
+
+	$(".btn-edit").click(() => {
+		$(".info").slideUp(200, () => {
+			$(".edit").slideDown(200);
+		});
+	})
+
+	$(".btn-clear").click(() => {
+		$(".edit").slideUp(200, () => {
+			$(".info").slideDown(200, ()=> {
+				$("#info-name")[0].parentElement.MaterialTextfield.change($("#info-name-out").text());
+				$("#info-occupation")[0].parentElement.MaterialTextfield.change($("#info-occupation-out").text());
+				$("#info-age")[0].parentElement.MaterialTextfield.change($("#info-age-out").text());
+				$("#info-descriptions")[0].parentElement.MaterialTextfield.change($("#info-descriptions-out").text());
+			});
+		});
+	})
+
+	$(".btn-done").click(() => {
+		$(".edit").slideUp(200, () => {
+			$(".info").slideDown(200, ()=> {
+				const name = $("#info-name").val();
+				const occupation = $("#info-occupation").val();
+				const age = $("#info-age").val();
+				const descriptions = $("#info-descriptions").val();
+
+				$("#info-name-out").text(name);
+				$("#info-occupation-out").text(occupation);
+				$("#info-age-out").text(age);
+				$("#info-descriptions-out").text(descriptions);
+
+				dbRef.child("user").child(firebase.auth().currentUser.uid).update({name, occupation, age, descriptions});
+			});
+		});
 	})
 
 	//Chat

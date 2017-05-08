@@ -59,29 +59,68 @@
 					</div>
 				</header>
 				<div class="mdl-layout__drawer">
+					<div class="info btn-edit">
+						<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">
+							<i class="material-icons">edit</i>
+						</button>
+					</div>
 					<div class="mdl-layout-title info-image-container">
 						<img src="image/unknow.svg" class="info-img" id="info-img">
 					</div>
-					<nav class="mdl-navigation">
+					<nav class="mdl-navigation info-nav-normal">
 						<div class="mdl-navigation__link">
-							<div>Name</div>
-							<div class="info" id="info-name">My Name</div>
+							<div class="info">
+								<div>Name</div>
+								<span id="info-name-out">My Name</span>
+							</div>
+
+							<div class="edit mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="info-name">
+							 	<label class="mdl-textfield__label" for="info-name">Name...</label>
+							</div>
 						</div>
 						<div class="mdl-navigation__link">
-							<div>Occupation</div>
-							<div class="info" id="info-occupation">My Occupation</div>
+							<div class="info">
+								<div>Occupation</div>
+								<span id="info-occupation-out">My Occupation</span>
+							</div>
+							
+							<div class="edit mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" id="info-occupation">
+							 	<label class="mdl-textfield__label" for="info-occupation">Occupation...</label>
+							</div>
 						</div>
 						<div class="mdl-navigation__link">
-							<div>Age</div>
-							<div class="info" id="info-age">My Age</div>
+							<div class="info">
+								<div>Age</div>
+								<span id="info-age-out">My Age</span>
+							</div>
+							<div class="edit mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" pattern="[1-9][0-9]+" id="info-age">
+							 	<label class="mdl-textfield__label" for="info-age">Age...</label>
+							</div>
 						</div>
 						<div class="mdl-navigation__link">
-							<div>Descriptions</div>
-							<div><p class="info"  id="info-descriptions">My Descriptions</p></div>
+							<div class="info">
+								<div>Descriptions</div>
+								<p id="info-descriptions-out">My Descriptions</p>
+							</div>
+							<div class="edit mdl-textfield mdl-js-textfield">
+								<textarea class="mdl-textfield__input" type="text" rows= "5" id="info-descriptions" ></textarea>
+								<label class="mdl-textfield__label" for="info-descriptions">Descriptions...</label>
+							</div>
 						</div>
-						<div class="mdl-navigation__link">
-							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-logout" onclick="location.reload();">
+						<div class="mdl-navigation__link" style="text-align: center;">
+							<button class="info mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-logout" onclick="location.reload();">
 								Log Out
+							</button>
+
+							<button class="edit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-clear">
+								<i class="material-icons">clear</i>
+							</button>
+
+							<button class="edit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-done">
+								<i class="material-icons">done</i>
 							</button>
 						</div>
 					</nav>

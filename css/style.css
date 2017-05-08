@@ -141,6 +141,25 @@
 	color: #eee !important;
 }
 
+.btn-clear{
+	width: 40%;
+	background-color: #C73E3A !important;
+	color: #eee !important;
+	margin-right: 20px;
+}
+
+.btn-done{
+	width: 40%;
+	background-color: #7BA23F !important;
+	color: #eee !important;
+}
+
+.btn-edit{
+	position: relative;
+	left: 400px;
+	top: 20px;
+}
+
 .info{
 	color: #2b2b2b;
 }
@@ -157,6 +176,13 @@
 	height: 300px;
 }
 
+.edit{
+	display: none;
+}
+
+#info-descriptions-out{
+	white-space: pre;
+}
 
 /* chatroom */
 
@@ -169,7 +195,7 @@
 .chatroom-overflow{
 	overflow-x:hidden;
 	overflow-y:auto;
-	height: 750px;
+	height: 75vh;
 	width: 800px;
 }
 
