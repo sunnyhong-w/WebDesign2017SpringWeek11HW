@@ -1,4 +1,6 @@
 $(document).ready(()=>{
+	var photoURL;
+
 	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyANUF6zYyrjYZpIXb27wHESDpw3HUw1-dE",
@@ -11,10 +13,24 @@ $(document).ready(()=>{
 	firebase.initializeApp(config);
 
 	var dbRef = firebase.database().ref();
+	var storageRef =  firebase.storage().ref();
 
 	function datecalc(time) {
 		const dt = new Date(time);
 		return dt.getHours() + ":" + dt.getMinutes() + " at " + dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
+	}
+
+	function namecheck(user) {
+		if(!user.displayName)
+		{
+			$(".whitemark").show();
+			$(".chatroom").css("filter", "blur(2px)");
+		}
+		else
+		{
+			$(".whitemark").fadeOut(200);
+			$(".chatroom").css("filter", "");
+		}
 	}
 
 	//AUTH
@@ -29,9 +45,11 @@ $(document).ready(()=>{
 			//Set User Data
 
 			var user = user.providerData[0];
-			$("#info-name")[0].parentElement.MaterialTextfield.change(user.displayName || "Anonymous");
+			$("#info-name")[0].parentElement.MaterialTextfield.change(user.displayName || "");
 			$("#info-name-out").text(user.displayName || "Anonymous");
 			$("#info-img").attr("src", user.photoURL || "image/unknow.svg");
+
+			namecheck(user);
 
 			dbRef.child("user").child(firebase.auth().currentUser.uid).once('value').then((snapshot) => {
 				var data = snapshot.val()
@@ -63,6 +81,7 @@ $(document).ready(()=>{
 
 				$(obj).appendTo(".chatroom-overflow > div");
 				$(obj).removeClass("template");
+				$(".chatroom-overflow").stop();
 				$(".chatroom-overflow").animate({ scrollTop: $(".chatroom-overflow").height() }, 1000);
 			})
 		}
@@ -117,12 +136,15 @@ $(document).ready(()=>{
 	$(".btn-edit").click(() => {
 		$(".info").slideUp(200, () => {
 			$(".edit").slideDown(200);
+			$(".info-imgupload").css("display", "flex");
 		});
 	})
 
 	$(".btn-clear").click(() => {
 		$(".edit").slideUp(200, () => {
 			$(".info").slideDown(200, ()=> {
+				var user = firebase.auth().currentUser;
+				$("#info-img").attr("src", user.photoURL || "image/unknow.svg");
 				$("#info-name")[0].parentElement.MaterialTextfield.change($("#info-name-out").text());
 				$("#info-occupation")[0].parentElement.MaterialTextfield.change($("#info-occupation-out").text());
 				$("#info-age")[0].parentElement.MaterialTextfield.change($("#info-age-out").text());
@@ -133,27 +155,32 @@ $(document).ready(()=>{
 
 	$(".btn-done").click(() => {
 		$(".edit").slideUp(200, () => {
-			$(".info").slideDown(200, ()=> {
-				const displayName = $("#info-name").val();
-				const occupation = $("#info-occupation").val();
-				const age = $("#info-age").val();
-				const descriptions = $("#info-descriptions").val();
+			$(".info").slideDown(200);
+		});
 
-				$("#info-name-out").text(displayName);
-				$("#info-occupation-out").text(occupation);
-				$("#info-age-out").text(age);
-				$("#info-descriptions-out").text(descriptions);
+		const displayName = $("#info-name").val();
+		const occupation = $("#info-occupation").val();
+		const age = $("#info-age").val();
+		const descriptions = $("#info-descriptions").val();
 
-				dbRef.child("user").child(firebase.auth().currentUser.uid).update({occupation, age, descriptions});
-				firebase.auth().currentUser.updateProfile({displayName});
-			});
+		dbRef.child("user").child(firebase.auth().currentUser.uid).update({occupation, age, descriptions}).then(() => {
+			$("#info-occupation-out").text(occupation);
+			$("#info-age-out").text(age);
+			$("#info-descriptions-out").text(descriptions);
+		});
+
+		firebase.auth().currentUser.updateProfile({displayName, photoURL}).then(() => {
+			var user = firebase.auth().currentUser;
+			namecheck(user);
+			$("#info-name-out").text(user.displayName);
+			$("#info-img").attr("src", user.photoURL || "image/unknow.svg");
 		});
 	})
 
 	//Chat
 
 	const chatinput = $("#chat-text")
-	$("#chat-text").keypress((e) => {
+	chatinput.keypress((e) => {
 		if(e.keyCode == 13 && chatinput.val() != "")
 		{
 			const name = $("#info-name").val();
@@ -172,7 +199,44 @@ $(document).ready(()=>{
 		}
 	})
 
+	$("#login-account").keypress((e) => {
+		if(e.keyCode == 13)
+		{
+			$(".btn-login").trigger("click");
+		}
+	})
+
+	$("#login-password").keypress((e) => {
+		if(e.keyCode == 13)
+		{
+			$(".btn-login").trigger("click");
+		}
+	})
+
+	//File
+	$("#info-file").change((e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		var file = e.target.files[0];
+
+		var metadata = {
+			'contentType': file.type
+		}
+
+		storageRef.child("images/" + file.name).put(file, metadata).then((snapshot) => {
+			photoURL = snapshot.metadata.downloadURLs[0];
+			$("#info-img").attr("src", photoURL || "image/unknow.svg");
+		}).catch((e) => {
+			console.log(e);
+		})
+	});
+
+	$(".info-imgupload").click(() => {
+		$("#info-file").trigger('click');
+	})
+
 	//Web Start
 	$(".login").fadeIn(1000, 'swing');
-	//firebase.auth().signOut();
+	firebase.auth().signOut();
 })

@@ -176,6 +176,32 @@
 	height: 300px;
 }
 
+.info-imgupload{
+	width: 300px;
+	height: 300px;
+	position: absolute;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	color: rgba(255,255,255,0);
+	background-color: rgba(43,43,43,0);
+	transition: color .2s ease-in, background-color .2s ease-in;
+	cursor:pointer;
+}
+
+.info-imgupload:hover{
+	color: rgba(255,255,255,.7);
+	background-color: rgba(43,43,43,.5);
+	transition: color .2s ease-in, background-color .2s ease-in;
+}
+
+.info-imgupload:active{
+	color: rgba(255,255,255,1);
+	background-color: rgba(43,43,43,.8);
+	transition: color .2s ease-in, background-color .2s ease-in;
+}
+
+
 .edit{
 	display: none;
 }
@@ -185,6 +211,35 @@
 }
 
 /* chatroom */
+
+.whitemark{
+	background-color: rgba(255,255,255,0.7);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	z-index: 10;
+
+	display:flex;
+	justify-content:center;
+	align-items:center;
+
+	cursor: pointer;
+}
+
+.whitemark p{
+	padding: 10px 50px;
+
+	font-family: "Noto Sans TC","Helvetica","Arial",sans-serif;
+	font-weight: 100;
+	font-size: 72px;
+	line-height: 2;
+	
+	color: white;
+	background-color: rgba(43,43,43,.6);
+
+	cursor: pointer;
+}
 
 .container-chatroom{
 	display: flex;
