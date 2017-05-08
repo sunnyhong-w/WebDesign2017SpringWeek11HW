@@ -1,5 +1,5 @@
 $(document).ready(()=>{
-		// Initialize Firebase
+	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyANUF6zYyrjYZpIXb27wHESDpw3HUw1-dE",
 		authDomain: "webdesign2017springhw-week11.firebaseapp.com",
@@ -12,33 +12,58 @@ $(document).ready(()=>{
 
 	var dbRef = firebase.database().ref();
 
-	var messageField = $("#messageInput");
-	var nameField = $("#nameInput");
-	var messageList = $("#example-message");
+	//AUTH
 
-	messageField.keypress((e) => {
-		if(e.keyCode == 13)
+	firebase.auth().onAuthStateChanged((user) => {
+		if(user)
 		{
-			var username = nameField.val();
-			var message = messageField.val();
-
-			dbRef.child("chat").push({ name: username, text: message });
-			messageField.val('');
+			$(".login").fadeOut(500, 'swing', () => {
+				$(".chatroom").fadeIn(500, 'swing');
+			});
 		}
 	})
 
-	dbRef.child("chat").limitToLast(10).on('child_added', (snapshot) => {
-		var data = snapshot.val();
-		var username = data.name || "anonymous";
-		var message = data.text;
+	//Login
 
-		var messageElement = $("<li>");
-		var nameElement = $("<strong class='example-chat-username'></strong>");
+	const loginAccount = $("#login-account");
+	const loginPassword = $("#login-password");
 
-		nameElement.text(username);
-		messageElement.text(message).prepend(nameElement);
+	$(".btn-login").click(() => {
+		const account = loginAccount.val();
+		const password = loginPassword.val();
 
-		messageList.append(messageElement);
-		messageList[0].scrollTop = messageList[0].scrollHeight;
+		const loginPromise = firebase.auth().signInWithEmailAndPassword(account, password);
+
+		loginPromise.catch((e) => {
+			if(e.code === "auth/user-not-found")
+			{
+				const createPromise = firebase.auth().createUserWithEmailAndPassword(account, password);
+				createPromise.catch((e) => {
+					$(".login-error").html("<p>Sorry,<br>" + e.message + "<br>Please check your input and try it again.</p>")
+					$(".login-error").slideUp(250, 'swing');
+					$(".login-error").slideDown(500, 'swing');
+					console.log(e.message);
+				})
+
+				createPromise.then((e) => {
+					$(".login-error").hide();
+				})
+			}
+			else
+			{
+				$(".login-error").html("<p>Sorry,<br>" + e.message + "<br>Please check your input and try it again.</p>")
+				$(".login-error").slideUp(250, 'swing');
+				$(".login-error").slideDown(500, 'swing');
+				console.log(e.message);
+			}
+		})
+
+		loginPromise.then((e) => {
+			$(".login-error").hide();
+		})
 	})
+
+	//Web Start
+	$(".login").fadeIn(1000, 'swing');
+	firebase.auth().signOut();
 })

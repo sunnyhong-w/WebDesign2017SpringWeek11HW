@@ -1,0 +1,44 @@
+.container{
+	height: 100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.login{
+	width: 500px;
+}
+
+.login button{
+	float: right;
+}
+
+.login-note > p{
+	color: #aaa;
+	border-left : 3px solid #aaa;
+	border-radius: 2px;
+	padding-left: 10px;
+}
+
+.login-error > p{
+	color: #C73E3A;
+	border-left : 3px solid #C73E3A;
+	border-radius: 2px;
+	padding-left: 10px;
+}
+
+.mdl-textfield{
+	width: 100%;
+}
+
+.error{
+	display: none;
+}
+
+.template{
+	display: none;
+}
+
+.state{
+	display: none;
+}
