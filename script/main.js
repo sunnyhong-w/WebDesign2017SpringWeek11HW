@@ -195,7 +195,7 @@ $(document).ready(()=>{
 			obj.message = chatinput.val();
 
 			dbRef.child("chat").push(obj);
-			chatinput.val('');
+			chatinput[0].parentElement.MaterialTextfield.change('');
 		}
 	})
 
