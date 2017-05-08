@@ -133,9 +133,32 @@
   left: 0;
 }
 
+/* drawer */
+
 .btn-logout{
-	color: #C73E3A;
+	width: 100%;
+	background-color: #C73E3A !important;
+	color: #eee !important;
 }
+
+.info{
+	color: #2b2b2b;
+}
+
+.info-image-container{
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	padding-left: 0px !important;
+}
+
+.info-img{
+	width: 300px;
+	height: 300px;
+}
+
+
+/* chatroom */
 
 .container-chatroom{
 	display: flex;

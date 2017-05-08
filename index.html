@@ -45,7 +45,7 @@
 				</div>
 				<div class="mdl-card__actions mdl-card--border">
 					<!-- Accent-colored raised button -->
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-login">LOGIN</button>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-login">Login</button>
 				</div>
 			</div>
 			<!-- Uses a header that scrolls with the text, rather than staying locked at the top -->
@@ -59,17 +59,31 @@
 					</div>
 				</header>
 				<div class="mdl-layout__drawer">
-					<div class="mdl-layout-title username">
-						<span>Name</span>
-						<button class="mdl-button mdl-js-button mdl-button--icon btn-logout" onclick="location.reload();">
-							<i class="material-icons">block</i>
-						</button>
+					<div class="mdl-layout-title info-image-container">
+						<img src="image/unknow.svg" class="info-img" id="info-img">
 					</div>
 					<nav class="mdl-navigation">
-						<span class="mdl-navigation__link" href="">Photo</span>
-						<span class="mdl-navigation__link" href="">Occupation</span>
-						<span class="mdl-navigation__link" href="">Age</span>
-						<span class="mdl-navigation__link" href="">Descriptions</span>
+						<div class="mdl-navigation__link">
+							<div>Name</div>
+							<div class="info" id="info-name">My Name</div>
+						</div>
+						<div class="mdl-navigation__link">
+							<div>Occupation</div>
+							<div class="info" id="info-occupation">My Occupation</div>
+						</div>
+						<div class="mdl-navigation__link">
+							<div>Age</div>
+							<div class="info" id="info-age">My Age</div>
+						</div>
+						<div class="mdl-navigation__link">
+							<div>Descriptions</div>
+							<div><p class="info"  id="info-descriptions">My Descriptions</p></div>
+						</div>
+						<div class="mdl-navigation__link">
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-logout" onclick="location.reload();">
+								Log Out
+							</button>
+						</div>
 					</nav>
 				</div>
 				<div aria-expanded="false" role="button" tabindex="0" class="mdl-layout__drawer-button"><i class="material-icons">person</i></div>

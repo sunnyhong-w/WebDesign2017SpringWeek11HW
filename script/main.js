@@ -26,6 +26,22 @@ $(document).ready(()=>{
 				$(".main").fadeIn(250, 'swing');
 			});
 
+			//Set User Data
+
+			var user = user.providerData[0];
+			$("#info-name").text(user.displayName || "Anonymous");
+			$("#info-img").attr("src", user.photoURL || "image/unknow.svg");
+
+			dbRef.child("user").child(firebase.auth().currentUser.uid).once('value').then((snapshot) => {
+				var data;
+				for(key in snapshot.val()) //只會發生一次
+					data = snapshot.val()[key];
+
+				$("#info-occupation").text(data.occupation || "<No occupation>");
+				$("#info-age").text(data.age || 0);
+				$("#info-descriptions").text(data.descriptions || "<No descriptions>");
+			});
+
 			//Chat History
 			const chatTemplate = $(".chat-template");
 
@@ -37,8 +53,8 @@ $(document).ready(()=>{
 
 				var obj = chatTemplate.clone();
 
-				$(obj).find(".chat-userimg").attr("src", user.image || "unknow.png");
-				$(obj).find(".chat-username").text(user.name);
+				$(obj).find(".chat-userimg").attr("src", user.image || "image/unknow.svg");
+				$(obj).find(".chat-username").text(user.name || "Anonymous");
 				$(obj).find(".chat-time").text(datecalc(time));
 				$(obj).find(".chat-data").text(message || "(Null)");
 
@@ -71,7 +87,13 @@ $(document).ready(()=>{
 					console.log(e.message);
 				})
 
-				createPromise.then((e) => {
+				createPromise.then((user) => {
+					dbRef.child("user").child(user.uid).push({
+						"occupation": "",
+						"age": 0,
+						"descriptions" : ""
+					});
+
 					$(".login-error").hide();
 				})
 			}
