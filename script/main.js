@@ -230,7 +230,9 @@ $(document).ready(()=>{
 			'contentType': file.type
 		}
 
-		storageRef.child("images/" + file.name).put(file, metadata).then((snapshot) => {
+		var type = file.name.substr(file.name.lastIndexOf("."));
+
+		storageRef.child("images/" + Date.now() + type).put(file, metadata).then((snapshot) => {
 			photoURL = snapshot.metadata.downloadURLs[0];
 			$("#info-img").attr("src", photoURL || "image/unknow.svg");
 		}).catch((e) => {
@@ -244,5 +246,4 @@ $(document).ready(()=>{
 
 	//Web Start
 	$(".login").fadeIn(1000, 'swing');
-	//firebase.auth().signOut();
 })
