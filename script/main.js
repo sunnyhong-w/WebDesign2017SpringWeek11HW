@@ -134,17 +134,18 @@ $(document).ready(()=>{
 	$(".btn-done").click(() => {
 		$(".edit").slideUp(200, () => {
 			$(".info").slideDown(200, ()=> {
-				const name = $("#info-name").val();
+				const displayName = $("#info-name").val();
 				const occupation = $("#info-occupation").val();
 				const age = $("#info-age").val();
 				const descriptions = $("#info-descriptions").val();
 
-				$("#info-name-out").text(name);
+				$("#info-name-out").text(displayName);
 				$("#info-occupation-out").text(occupation);
 				$("#info-age-out").text(age);
 				$("#info-descriptions-out").text(descriptions);
 
-				dbRef.child("user").child(firebase.auth().currentUser.uid).update({name, occupation, age, descriptions});
+				dbRef.child("user").child(firebase.auth().currentUser.uid).update({occupation, age, descriptions});
+				firebase.auth().currentUser.updateProfile({displayName});
 			});
 		});
 	})
@@ -155,9 +156,13 @@ $(document).ready(()=>{
 	$("#chat-text").keypress((e) => {
 		if(e.keyCode == 13 && chatinput.val() != "")
 		{
+			const name = $("#info-name").val();
+			var timg = $("#info-img").attr("src");
+			const image = timg != "image/unknow.svg" ? timg : "";
+
 			var obj = {};
 			obj.user = {
-				name : "testname"
+				name, image
 			}
 			obj.time = Date.now();
 			obj.message = chatinput.val();
