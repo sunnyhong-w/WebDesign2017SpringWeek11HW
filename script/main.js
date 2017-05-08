@@ -12,14 +12,40 @@ $(document).ready(()=>{
 
 	var dbRef = firebase.database().ref();
 
+	function datecalc(time) {
+		const dt = new Date(time);
+		return dt.getHours() + ":" + dt.getMinutes() + " at " + dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
+	}
+
 	//AUTH
 
 	firebase.auth().onAuthStateChanged((user) => {
 		if(user)
 		{
-			$(".login").fadeOut(500, 'swing', () => {
-				$(".chatroom").fadeIn(500, 'swing');
+			$(".login").fadeOut(250, 'swing', () => {
+				$(".main").fadeIn(250, 'swing');
 			});
+
+			//Chat History
+			const chatTemplate = $(".chat-template");
+
+			dbRef.child("chat").limitToLast(20).on('child_added', (snapshot) => {
+				var data = snapshot.val();
+				var user = data.user;
+				var message = data.message;
+				var time = data.time;
+
+				var obj = chatTemplate.clone();
+
+				$(obj).find(".chat-userimg").attr("src", user.image || "unknow.png");
+				$(obj).find(".chat-username").text(user.name);
+				$(obj).find(".chat-time").text(datecalc(time));
+				$(obj).find(".chat-data").text(message || "(Null)");
+
+				$(obj).appendTo(".chatroom-overflow > div");
+				$(obj).removeClass("template");
+				$(".chatroom-overflow").animate({ scrollTop: $(".chatroom-overflow").height() }, 1000);
+			})
 		}
 	})
 
@@ -63,7 +89,25 @@ $(document).ready(()=>{
 		})
 	})
 
+	//Chat
+
+	const chatinput = $("#chat-text")
+	$("#chat-text").keypress((e) => {
+		if(e.keyCode == 13 && chatinput.val() != "")
+		{
+			var obj = {};
+			obj.user = {
+				name : "testname"
+			}
+			obj.time = Date.now();
+			obj.message = chatinput.val();
+
+			dbRef.child("chat").push(obj);
+			chatinput.val('');
+		}
+	})
+
 	//Web Start
 	$(".login").fadeIn(1000, 'swing');
-	firebase.auth().signOut();
+	//firebase.auth().signOut();
 })

@@ -1,7 +1,88 @@
+/*
+* Noto Sans TC (Chinese_traditional) http://www.google.com/fonts/earlyaccess
+ */
+@font-face {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 100;
+  src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Thin.woff2) format('woff2'),
+       url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Thin.woff) format('woff'),
+       url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Thin.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 300;
+  src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Light.woff2) format('woff2'),
+       url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Light.woff) format('woff'),
+       url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Light.otf) format('opentype');
+}
+@font-face {
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 400;
+   src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Regular.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Regular.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 500;
+   src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Medium.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Medium.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Medium.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 700;
+   src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Bold.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Bold.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 900;
+   src: url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Black.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Black.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanstc/v1/NotoSansTC-Black.otf) format('opentype');
+ }
+
+/* personal */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px; }
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px; }
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+
+::-webkit-scrollbar-track {
+  background: #eee;
+  border: 0px none #ffffff;
+  border-radius: 50px; }
+
+::-webkit-scrollbar-corner {
+  background: transparent; }
+
+
 .container{
 	height: 100vh;
 	display:flex;
 	justify-content:center;
+	align-items:center;
+}
+
+.mdl-layout-title {
+	display:flex;
 	align-items:center;
 }
 
@@ -36,9 +117,85 @@
 }
 
 .template{
-	display: none;
+	display: none !important;
 }
 
 .state{
 	display: none;
+}
+
+.mdl-layout__drawer {
+  width: 480px;
+  left: -240px;
+}
+
+.mdl-layout__drawer.is-visible {
+  left: 0;
+}
+
+.btn-logout{
+	color: #C73E3A;
+}
+
+.container-chatroom{
+	display: flex;
+	justify-content:center;
+	width: 100vw;
+}
+
+.chatroom-overflow{
+	overflow-x:hidden;
+	overflow-y:auto;
+	height: 750px;
+	width: 800px;
+}
+
+.chatroom{
+	width: 800px;
+	padding: 20px 0px;
+}
+
+.chat-template{
+	background-color: #FCF9F5;
+	width: 750px;
+	display:flex;
+	padding: 5px 10px;
+	margin: 10px 0px;
+	border-bottom: 2px solid #F1E9DC;
+	border-radius: 2px;
+}
+
+.chat-template > div{
+	padding: 0px 5px;
+}
+
+.chat-template .chat-userimg{
+	width: 50px;
+	height: 50px;
+	border-radius: 5px;
+}
+
+.chat-template .chat-username{
+	font-family: "Noto Sans TC","Helvetica","Arial",sans-serif;
+	font-weight: 900;
+	margin: 5px 0px;
+}
+
+.chat-template .chat-time{
+	font-weight: 200;
+	color: #aaa;
+	margin: 5px 0px;
+}
+
+.chat-template .chat-data{
+	font-family: "Noto Sans TC","Helvetica","Arial",sans-serif;
+	font-weight: 300;
+}
+
+.chat-textinput{
+	width: 100%;
+}
+
+.chat-text{
+	width: 100%;
 }
