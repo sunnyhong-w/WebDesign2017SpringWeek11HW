@@ -303,6 +303,7 @@
 .chat-template .chat-data{
 	font-family: "Noto Sans TC","Helvetica","Arial",sans-serif;
 	font-weight: 300;
+	word-break: break-all;
 }
 
 .chat-textinput{

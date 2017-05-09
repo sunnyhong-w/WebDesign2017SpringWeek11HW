@@ -74,15 +74,18 @@ $(document).ready(()=>{
 
 				var obj = chatTemplate.clone();
 
-				$(obj).find(".chat-userimg").attr("src", user.image || "image/unknow.svg");
-				$(obj).find(".chat-username").text(user.name || "Anonymous");
-				$(obj).find(".chat-time").text(datecalc(time));
-				$(obj).find(".chat-data").text(message || "(Null)");
+				if(message)
+				{
+					$(obj).find(".chat-userimg").attr("src", user.image || "image/unknow.svg");
+					$(obj).find(".chat-username").text(user.name || "Anonymous");
+					$(obj).find(".chat-time").text(datecalc(time));
+					$(obj).find(".chat-data").text(message || "(Null)");
 
-				$(obj).appendTo(".chatroom-overflow > div");
-				$(obj).removeClass("template");
-				$(".chatroom-overflow").stop();
-				$(".chatroom-overflow").animate({ scrollTop: $(".chat-template").length * 62}, 1000); //hack scroll pos
+					$(obj).appendTo(".chatroom-overflow > div");
+					$(obj).removeClass("template");
+					$(".chatroom-overflow").stop();
+					$(".chatroom-overflow").animate({ scrollTop: $(".chat-template").length * 62}, 1000); //hack scroll pos
+				}
 			})
 		}
 	})
